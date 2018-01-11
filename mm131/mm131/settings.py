@@ -9,6 +9,8 @@ NEWSPIDER_MODULE = 'mm131.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+FEED_EXPORT_ENCODING = 'utf-8'
+
 #添加请求头
 DEFAULT_REQUEST_HEADERS = {
 'accept': 'image/webp,*/*;q=0.8',
@@ -19,11 +21,12 @@ DEFAULT_REQUEST_HEADERS = {
 
 ITEM_PIPELINES = {
 'mm131.mysqlpipelines.MySqlPipeline': 300,
+#'mm131.filepipelines.FilePipeline': 200,
 }
 
 #Mysql数据库的配置信息
-MYSQL_HOST = '192.168.0.200'
-MYSQL_DBNAME = 'jianshu'        #数据库名字，请修改
+MYSQL_HOST = 'localhost'
+MYSQL_DBNAME = 'beautiful_set'        #数据库名字，请修改
 MYSQL_USER = 'root'             #数据库账号，请修改
-MYSQL_PASSWD = '123456'         #数据库密码，请修改
+MYSQL_PASSWD = 'root'         #数据库密码，请修改
 MYSQL_PORT = 3306               #数据库端口，

@@ -25,5 +25,4 @@ class Item(scrapy.Item):
     #分类Id
     category_id = scrapy.Field()
     #存储的目录
-    image_directory = scrapy.Field()
-    pass
+    path = scrapy.Field()

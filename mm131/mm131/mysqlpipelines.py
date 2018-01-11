@@ -27,9 +27,9 @@ class MySqlPipeline(object):
         query.addErrback(self.handle_error,item,spider)
 
     def do_insert(self, cursor, item):
-        sql = "INSERT INTO image(image_id,image_title,image_from,create_time) SELECT %s,%s,%s,now() NOW() FROM image WHERE not exists (SELECT 1 FROM image WHERE image_id = %s);" \
-              "INSERT INTO image_url (image_id,image_url,image_name) VALUES (%s,%s,%s);"
-        cursor.execute(sql, (item['image_id'], item['image_title'], item['image_from'], item['image_id'], item['image_id'], item['image_url'], item['image_name']))
+        sql = "INSERT INTO image(image_id,image_title,create_time) SELECT %s,%s,NOW() FROM image WHERE not exists (SELECT 1 FROM image WHERE image_id = %s);" \
+              "INSERT INTO image_url (image_id,image_url) VALUES (%s,%s);"
+        cursor.execute(sql, (item['image_id'], item['image_title'], item['image_id'], item['image_id'], item['image_url']))
 
     def handle_error(self, failure, item, spider):
         #处理异步插入异常
