@@ -9,6 +9,9 @@ NEWSPIDER_MODULE = 'mm131.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+#禁止重试
+RETRY_ENABLED = False
+
 FEED_EXPORT_ENCODING = 'utf-8'
 
 #添加请求头
