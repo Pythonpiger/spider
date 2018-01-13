@@ -48,20 +48,20 @@ class SpiderSpider(scrapy.Spider):
         is_last_page = response.xpath(u"//a[@class='page-en']/text()='下一页'").extract()[0]
         last_page_url = response.xpath(u"//a[text()='下一页']/@href").extract()[0]
         if(int(is_last_page) == 1):
-            yield Request(self.main_url + category_code + last_page_url, meta={'category_code': category_code}, callback=self.parse_one)
+            yield Request(self.main_url + category_code + '/' + last_page_url, meta={'category_code': category_code}, callback=self.parse_one)
         images = response.xpath(u'.//dl/dd').extract()
         for image in images:
             image = html.fromstring(image)
             image_html_url = image.xpath(u'.//a/@href')[0].encode('utf-8')
             item = Item()
-            item['image_title'] = image.xpath(u"//a/img/@alt")[0].encode('utf-8')
+            print images
+            item['image_title'] = image.xpath(u".//a/img/@alt")[0].encode('utf-8')
+            print item['image_title']
             #随机生成10位图片文件夹名称 mm131/xinggan/028e3md7
             salt = ''.join(random.sample(string.ascii_lowercase + string.digits, 10))
             image_url = self.image_from + '/' + category_code + '/' + salt
             item['image_url'] = image_url
             path = self.disk + '/' + category_code + '/' + salt
-            print path
-            item['path'] = path
              #创建分类文件夹
             if not os.path.isdir(path):
                 os.makedirs(path)
@@ -69,19 +69,22 @@ class SpiderSpider(scrapy.Spider):
             item['category_code'] = category_code
             item['image_from'] = self.image_from
             print item
-            yield Request(image_html_url, meta={'item': item}, callback=self.parse_two)
+            yield Request(image_html_url, meta={'item': item, 'path':path}, callback=self.parse_two)
 
     #1.获取每个image的标题，url入口，分类
     #2.随机生成一个image_id
     def parse_two(self, response):
         item = response.meta['item']
         category_code = item['category_code']
+        path = response.meta['path']
         is_page_last = response.xpath(u'//div/a[@class="page-ch"]/text()="下一页"').extract()[0].encode('utf-8')
         page_last_url = response.xpath(u'//div/a[@class="page-ch" and text()="下一页"]/@href').extract()[0].encode('utf-8')
         item['image_down_url'] = response.xpath(u'//div[@class="content-pic"]/a/img/@src').extract()[0].encode('utf-8')
         if(int(is_page_last) == 1):
-            yield Request(self.main_url+category_code+'/'+page_last_url, meta={'item': item}, callback=self.parse_two)
-        item['path'] = item['path'] + '/' + re.sub(r'[^0-9]', '', str(datetime.datetime.now())) + '/' + '.jpg'
+            yield Request(self.main_url+category_code+'/'+page_last_url, meta={'item': item, 'path': path}, callback=self.parse_two)
+            file_name = re.sub(r'[^0-9]', '', str(datetime.datetime.now()))
+        item['path'] = path + '/' + file_name + '.jpg'
+        item['image_url'] = item['image_url'] + '/' + file_name + '.jpg'
         #判断是否有下一页
         print item
         yield item
