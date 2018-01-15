@@ -23,8 +23,9 @@ DEFAULT_REQUEST_HEADERS = {
 }
 
 ITEM_PIPELINES = {
-'mm131.mysqlpipelines.MySqlPipeline': 300,
+#'mm131.mysqlpipelines.MySqlPipeline': 300,
 #'mm131.filepipelines.FilePipeline': 200,
+    'mm131.testpipelines.TestPipeline': 300,
 }
 
 #Mysql数据库的配置信息

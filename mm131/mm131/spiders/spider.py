@@ -10,7 +10,6 @@ import sys
 import random
 import string
 from lxml import html
-from pypinyin import pinyin, lazy_pinyin
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -54,37 +53,39 @@ class SpiderSpider(scrapy.Spider):
             image = html.fromstring(image)
             image_html_url = image.xpath(u'.//a/@href')[0].encode('utf-8')
             item = Item()
-            print images
+            #图片标题
             item['image_title'] = image.xpath(u".//a/img/@alt")[0].encode('utf-8')
-            print item['image_title']
-            #随机生成10位图片文件夹名称 mm131/xinggan/028e3md7
+            #随机生成10位图片文件夹名称 mm131/xinggan/028e3md7  salt
             salt = ''.join(random.sample(string.ascii_lowercase + string.digits, 10))
-            image_url = self.image_from + '/' + category_code + '/' + salt
-            item['image_url'] = image_url
-            path = self.disk + '/' + category_code + '/' + salt
+            #图片路径目录（保存在数据库的）image_url_dir
+            image_url_dir = self.image_from + '/' + category_code + '/' + salt
+            item['image_url_dir'] = image_url_dir
+            dir_path = self.disk + '/' + category_code + '/' + salt
+            item['dir_path'] = dir_path
              #创建分类文件夹
-            if not os.path.isdir(path):
-                os.makedirs(path)
+            if not os.path.isdir(dir_path):
+                os.makedirs(dir_path)
             item['image_id'] = str(uuid.uuid1())
             item['category_code'] = category_code
             item['image_from'] = self.image_from
-            print item
-            yield Request(image_html_url, meta={'item': item, 'path':path}, callback=self.parse_two)
+            # print 'parse_one图片Id' + item['image_id']
+            # print 'parse_one图片标题' + item['image_title']
+            # print 'parse_one图片图片保存在数据库的目录' + item['image_url_dir']
+            # print 'parse_one图片存储的目录' + item['dir_path']
+            yield Request(image_html_url, meta={'item': item}, callback=self.parse_two)
 
     #1.获取每个image的标题，url入口，分类
     #2.随机生成一个image_id
     def parse_two(self, response):
         item = response.meta['item']
         category_code = item['category_code']
-        path = response.meta['path']
-        is_page_last = response.xpath(u'//div/a[@class="page-ch"]/text()="下一页"').extract()[0].encode('utf-8')
-        page_last_url = response.xpath(u'//div/a[@class="page-ch" and text()="下一页"]/@href').extract()[0].encode('utf-8')
+        is_page_last = response.xpath(u'.//div/a[@class="page-ch"]/text()="下一页"').extract()[0].encode('utf-8')
+        page_last_url = response.xpath(u'.//div/a[@class="page-ch" and text()="下一页"]/@href').extract()[0].encode('utf-8')
         item['image_down_url'] = response.xpath(u'//div[@class="content-pic"]/a/img/@src').extract()[0].encode('utf-8')
-        if(int(is_page_last) == 1):
-            yield Request(self.main_url+category_code+'/'+page_last_url, meta={'item': item, 'path': path}, callback=self.parse_two)
-            file_name = re.sub(r'[^0-9]', '', str(datetime.datetime.now()))
-        item['path'] = path + '/' + file_name + '.jpg'
-        item['image_url'] = item['image_url'] + '/' + file_name + '.jpg'
+        file_name = re.sub(r'[^0-9]', '', str(datetime.datetime.now()))
+        item['file_path'] = item['dir_path'] + '/' + file_name + '.jpg'
+        item['image_url'] = item['image_url_dir'] + '/' + file_name + '.jpg'
         #判断是否有下一页
-        print item
         yield item
+        if(int(is_page_last) == 1):
+            yield Request(self.main_url+category_code+'/'+page_last_url, meta={'item': item}, callback=self.parse_two)
