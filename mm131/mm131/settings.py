@@ -8,7 +8,8 @@ NEWSPIDER_MODULE = 'mm131.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-
+#下载延迟
+DOWNLOAD_DELAY=0.72
 #禁止重试
 RETRY_ENABLED = False
 
@@ -16,16 +17,17 @@ FEED_EXPORT_ENCODING = 'utf-8'
 
 #添加请求头
 DEFAULT_REQUEST_HEADERS = {
-'accept': 'image/webp,*/*;q=0.8',
-'accept-language': 'zh-CN,zh;q=0.8',
-'referer': 'https://www.mm131.com/',
-'user-agent': 'Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36',
+      "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+      "Accept-Language":"zh-CN,zh;q=0.9",
+      "Accept-Encoding":"gzip, deflate",
+'referer': 'https://www.mm131.com/*/*',
+'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36',
 }
 
 ITEM_PIPELINES = {
-#'mm131.mysqlpipelines.MySqlPipeline': 300,
-#'mm131.filepipelines.FilePipeline': 200,
-    'mm131.testpipelines.TestPipeline': 300,
+'mm131.mysqlpipelines.MySqlPipeline': 300,
+'mm131.filepipelines.FilePipeline': 200,
+    #'mm131.testpipelines.TestPipeline': 300,
 }
 
 #Mysql数据库的配置信息
