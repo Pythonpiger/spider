@@ -9,7 +9,7 @@ NEWSPIDER_MODULE = 'mm131.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 #设置下载延迟
-DOWNLOAD_DELAY = 0.5
+DOWNLOAD_DELAY = 0.2
 #禁止重试
 RETRY_ENABLED = False
 

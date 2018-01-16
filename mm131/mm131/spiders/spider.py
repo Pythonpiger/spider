@@ -69,10 +69,7 @@ class SpiderSpider(scrapy.Spider):
             item['image_id'] = str(uuid.uuid1())
             item['category_code'] = category_code
             item['image_from'] = self.image_from
-            # print 'parse_one图片Id' + item['image_id']
-            # print 'parse_one图片标题' + item['image_title']
-            # print 'parse_one图片图片保存在数据库的目录' + item['image_url_dir']
-            # print 'parse_one图片存储的目录' + item['dir_path']
+
             headers = {
                 "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
                 "Accept-Language":"zh-CN,zh;q=0.8",
@@ -85,7 +82,6 @@ class SpiderSpider(scrapy.Spider):
     #1.获取每个image的标题，url入口，分类
     #2.随机生成一个image_id
     def parse_two(self, response):
-        print response.text
         item = response.meta['item']
         category_code = item['category_code']
         is_page_last = response.xpath(u'.//div/a[@class="page-ch"]/text()="下一页"').extract()[0].encode('utf-8')
@@ -105,9 +101,5 @@ class SpiderSpider(scrapy.Spider):
         item['file_path'] = item['dir_path'] + '/' + file_name + '.jpg'
         item['image_url'] = item['image_url_dir'] + '/' + file_name + '.jpg'
         item['image_html'] = response.url
-        print 'parse_one图片Id' + item['image_id']
-        print 'parse_one图片标题' + item['image_title']
-        print 'parse_one图片图片保存在数据库的目录' + item['image_url_dir']
-        print 'parse_one图片存储的目录' + item['dir_path']
-        print 'parse_one图片下载路径' + item['image_down_url']
+
         yield item
