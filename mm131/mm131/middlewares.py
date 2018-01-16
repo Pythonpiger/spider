@@ -4,7 +4,7 @@
 #
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
-
+from fake_useragent import UserAgent #这是一个随机UserAgent的包，里面有很多UserAgent
 from scrapy import signals
 
 
@@ -54,3 +54,4 @@ class Mm131SpiderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+

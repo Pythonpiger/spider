@@ -16,7 +16,7 @@ sys.setdefaultencoding('utf-8')
 class SpiderSpider(scrapy.Spider):
 
     name = 'spider'
-    allowed_domains = ['mm131.com']
+    allowed_domains = ['mm131.com', 'img1.mm131.me']
     disk = r'C:/python/image/mm131'
     image_from = 'mm131'
     main_url = 'http://www.mm131.com/'
@@ -73,20 +73,41 @@ class SpiderSpider(scrapy.Spider):
             # print 'parse_one图片标题' + item['image_title']
             # print 'parse_one图片图片保存在数据库的目录' + item['image_url_dir']
             # print 'parse_one图片存储的目录' + item['dir_path']
-            yield Request(image_html_url, meta={'item': item}, callback=self.parse_two)
+            headers = {
+                "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                "Accept-Language":"zh-CN,zh;q=0.8",
+                "Accept-Encoding":"gzip, deflate",
+                'referer': response.url,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36',
+                }
+            yield Request(image_html_url, meta={'item': item}, callback=self.parse_two, headers=headers)
 
     #1.获取每个image的标题，url入口，分类
     #2.随机生成一个image_id
     def parse_two(self, response):
+        print response.text
         item = response.meta['item']
         category_code = item['category_code']
         is_page_last = response.xpath(u'.//div/a[@class="page-ch"]/text()="下一页"').extract()[0].encode('utf-8')
         #判断是否有下一页
         if(int(is_page_last) == 1):
+            headers = {
+                "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                "Accept-Language":"zh-CN,zh;q=0.8",
+                "Accept-Encoding":"gzip, deflate",
+                'referer': response.url,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36',
+                }
             page_last_url = response.xpath(u'.//div/a[@class="page-ch" and text()="下一页"]/@href').extract()[0].encode('utf-8')
-            yield Request(self.main_url+category_code+'/'+page_last_url, meta={'item': item}, callback=self.parse_two)
+            yield Request(self.main_url+category_code+'/'+page_last_url, meta={'item': item}, callback=self.parse_two, headers=headers)
         item['image_down_url'] = response.xpath(u'//div[@class="content-pic"]/a/img/@src').extract()[0].encode('utf-8')
         file_name = re.sub(r'[^0-9]', '', str(datetime.datetime.now()))
         item['file_path'] = item['dir_path'] + '/' + file_name + '.jpg'
         item['image_url'] = item['image_url_dir'] + '/' + file_name + '.jpg'
+        item['image_html'] = response.url
+        print 'parse_one图片Id' + item['image_id']
+        print 'parse_one图片标题' + item['image_title']
+        print 'parse_one图片图片保存在数据库的目录' + item['image_url_dir']
+        print 'parse_one图片存储的目录' + item['dir_path']
+        print 'parse_one图片下载路径' + item['image_down_url']
         yield item

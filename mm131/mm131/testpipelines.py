@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from twisted.enterprise import adbapi
-import pymysql
-import pymysql.cursors
 
 class TestPipeline(object):
     def process_item(self, item, spider):

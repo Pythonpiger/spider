@@ -10,7 +10,7 @@ class MySqlPipeline(object):
     '''
     #创建初始化函数，当通过此类创建对象时首先被调用的方法
     def __init__(self, dbpool):
-        self.dbpool=dbpool
+        self.dbpool = dbpool
 
     #创建一个静态方法,静态方法的加载内存优先级高于init方法，java的static方法类似，
     #在创建这个类的对之前就已将加载到了内存中，所以init这个方法可以调用这个方法产生的对象
@@ -27,9 +27,12 @@ class MySqlPipeline(object):
         query.addErrback(self.handle_error,item,spider)
 
     def do_insert(self, cursor, item):
-        sql = "INSERT INTO image (image_id,image_from,image_title,category_code,create_time) SELECT * FROM(SELECT %s image_id,%s,%s,%s,NOW()FROM DUAL) a WHERE NOT EXISTS (SELECT image_id FROM image	WHERE image.image_id = a.image_id);"\
+        sql = "INSERT INTO image (image_id,image_from,image_title,category_code,create_time) " \
+              "SELECT * FROM(SELECT %s image_id,%s image_from,%s image_title,%s category_code,NOW() create_time FROM DUAL) a " \
+              "WHERE NOT EXISTS (SELECT image_id FROM image	WHERE image.image_id = a.image_id);"\
               "INSERT INTO image_url (image_id,image_url,image_name) VALUES (%s,%s,%s);"
-        cursor.execute(sql, (item['image_id'], item['image_from'], item['image_title'], item['category_code'], item['image_id'], item['image_url'], item['image_title']))
+        cursor.execute(sql,
+                       (item['image_id'], item['image_from'], item['image_title'], item['category_code'], item['image_id'], item['image_url'], item['image_title']))
 
     def handle_error(self, failure, item, spider):
         #处理异步插入异常

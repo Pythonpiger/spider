@@ -23,3 +23,5 @@ class Item(scrapy.Item):
     file_path = scrapy.Field()
     #每张图片的访问下载地址
     image_down_url = scrapy.Field()
+    #
+    image_html = scrapy.Field()
