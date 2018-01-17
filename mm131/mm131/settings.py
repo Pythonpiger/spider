@@ -9,9 +9,12 @@ NEWSPIDER_MODULE = 'mm131.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 #设置下载延迟
-DOWNLOAD_DELAY = 0.2
+DOWNLOAD_DELAY = 0.1
 #禁止重试
 RETRY_ENABLED = False
+
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+CONCURRENT_REQUESTS = 200
 
 FEED_EXPORT_ENCODING = 'utf-8'
 

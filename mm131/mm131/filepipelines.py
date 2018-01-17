@@ -11,8 +11,8 @@ class FilePipeline(object):
         image_down_url = item['image_down_url']
         file_path = item['file_path']
 
-        print '正在保存图片：',image_down_url
-        print '图片路径：',file_path
+        print '正在保存图片 ：',image_down_url
+        print '图片路径 ：',file_path
         headers = {
                 "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
                 "Accept-Language":"zh-CN,zh;q=0.8",

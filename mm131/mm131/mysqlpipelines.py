@@ -36,4 +36,4 @@ class MySqlPipeline(object):
 
     def handle_error(self, failure, item, spider):
         #处理异步插入异常
-        print("错误在这里>>>>>>>>>>>>>",failure,"<<<<<<<<<<<<<错误在这里")
+        print('错误在这里>>>>>>>>>>>>>',failure,'<<<<<<<<<<<<<错误在这里')
