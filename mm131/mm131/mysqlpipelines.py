@@ -2,6 +2,7 @@
 from twisted.enterprise import adbapi
 import pymysql
 import pymysql.cursors
+from scrapy import log
 
 class MySqlPipeline(object):
 
@@ -27,13 +28,19 @@ class MySqlPipeline(object):
         query.addErrback(self.handle_error,item,spider)
 
     def do_insert(self, cursor, item):
-        sql = "INSERT INTO image (image_id,image_from,image_title,category_code,create_time) " \
-              "SELECT * FROM(SELECT %s image_id,%s image_from,%s image_title,%s category_code,NOW() create_time FROM DUAL) a " \
-              "WHERE NOT EXISTS (SELECT image_id FROM image	WHERE image.image_id = a.image_id);"\
-              "INSERT INTO image_url (image_id,image_url,image_name) VALUES (%s,%s,%s);"
-        cursor.execute(sql,
-                       (item['image_id'], item['image_from'], item['image_title'], item['category_code'], item['image_id'], item['image_url'], item['image_title']))
-
+        try:
+            sql = "INSERT INTO image (image_id,image_from,image_title,category_code,create_time) " \
+                  "SELECT * FROM(SELECT %s image_id,%s image_from,%s image_title,%s category_code,NOW() create_time FROM DUAL) a " \
+                  "WHERE NOT EXISTS (SELECT image_id FROM image	WHERE image.image_id = a.image_id);"\
+                  "INSERT INTO image_url (image_id,image_url,image_name) VALUES (%s,%s,%s);"
+            cursor.execute(sql, (item['image_id'], item['image_from'], item['image_title'], item['category_code']
+                            , item['image_id'], item['image_url'], item['image_title']
+                            ))
+        except Exception as e:
+            log.msg("This is a ERROR ", level=log.ERROR)
+            log.ERROR(e)
     def handle_error(self, failure, item, spider):
         #处理异步插入异常
-        print('错误在这里>>>>>>>>>>>>>',failure,'<<<<<<<<<<<<<错误在这里')
+        for i in item:
+            log.msg('key : ' + i + 'value : ' + item[i], level=log.ERROR)
+        #log.msg('错误在这里', failure, level=log.ERROR)
