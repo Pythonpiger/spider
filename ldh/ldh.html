@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI 排序（Sortable） - 默认功能</title>
+    <link rel="stylesheet" href="./jquery-ui-1.12.1/jquery-ui.css">
+    <link rel="stylesheet" href="./bootstrap-3.3.7/css/bootstrap.css">
+
+    <script src="./jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="./jquery-ui-1.12.1/jquery-ui.js"></script>
+    <script src="./bootstrap-3.3.7/js/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+    <style>
+        #sortable {
+            list-style-type: none;
+            margin: auto;
+            padding: 0;
+            width: 100%;
+        }
+
+        #sortable li {
+            margin: 3px 3px 3px 0;
+            padding: 1px;
+            float: left;
+            width: 33%;
+            height: 245px;
+            font-size: 4em;
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+    </script>
+</head>
+<body>
+<!--导航栏-->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">LZ我要和你网恋</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">2018</a></li>
+            <li><a href="#">dao</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    JAZZ
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">f</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--导航栏-->
+
+<!--主题-->
+<div class="col-lg-1">
+</div>
+<div class="col-lg-10">
+    <ul id="sortable">
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+        <li class="ui-state-default"><img src="./img/10.jpg" style="width: 365px"></li>
+    </ul>
+</div>
+<div class="col-lg-1">
+</div>
+<!--主题-->
+
+<!--底部-->
+<footer class="footer navbar-fixed-bottom container " style="width:100%;background:#F8F8F8">
+    <div class="container" >
+        <p class="container" style="text-align: center;margin-bottom: 5px;margin-top: 5px">&copy; ldh 2018</p>
+    </div>
+</footer>
+<!--底部-->
+</body>
+</html>
