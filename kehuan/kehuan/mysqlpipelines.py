@@ -22,6 +22,8 @@ class MySqlPipeline(object):
         return cls(dbpool)
 
     def process_item(self, item, spider):
+        for i in item:
+             print 'key : ' + i + 'value : ' + str(item[i])
         # 使用twisted将mysql插入变成异步执行
         query = self.dbpool.runInteraction(self.do_insert, item)
         #这里不往下传入item,spider，handle_error则不需接受,item,spider)
@@ -37,10 +39,10 @@ class MySqlPipeline(object):
                             , item['book_id'], item['section_title'], item['section_seq'], item['section_content']
                             ))
         except Exception as e:
-            log.msg("This is a ERROR ", level=log.ERROR)
-            log.ERROR(e)
+            for i in item:
+             print 'key : ' + i + 'value : ' + str(item[i])
     def handle_error(self, failure, item, spider):
         #处理异步插入异常
         for i in item:
-            log.msg('key : ' + i + 'value : ' + item[i], level=log.ERROR)
+            print 'key : ' + i + 'value : ' + str(item[i])
         #log.msg('错误在这里', failure, level=log.ERROR)

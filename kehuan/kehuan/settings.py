@@ -6,8 +6,11 @@ NEWSPIDER_MODULE = 'kehuan.spiders'
 
 ROBOTSTXT_OBEY = False
 
+#设置下载延迟
+DOWNLOAD_DELAY = 0.1
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 200
+CONCURRENT_REQUESTS = 16
 
 FEED_EXPORT_ENCODING = 'utf-8'
 
