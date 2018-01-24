@@ -4,5 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 2.7 (C:\software\Python27\python.exe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="kehuan" />
+    <orderEntry type="module" module-name="test" />
   </component>
 </module>
