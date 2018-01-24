@@ -9,12 +9,15 @@ ROBOTSTXT_OBEY = False
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 200
 
+FEED_EXPORT_ENCODING = 'utf-8'
+
 #添加请求头
 DEFAULT_REQUEST_HEADERS = {
-'accept': 'image/webp,*/*;q=0.8',
-'accept-language': 'zh-CN,zh;q=0.8',
-'referer': 'https://www.kehuan.net.cn/',
-'user-agent': 'Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36',
+"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+"Accept-Language":"zh-CN,zh;q=0.8",
+"Accept-Encoding":"gzip, deflate",
+'referer': 'http://www.kehuan.net.cn/',
+'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36',
 }
 
 #连接数据库
