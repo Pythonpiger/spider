@@ -9,3 +9,7 @@ mm131/.idea/mm131.iml
 *.iml
 *.iml
 ldh/.idea/vcs.xml
+mm131/mm131/__init__.pyc
+mm131/mm131/__init__.pyc
+mm131/mm131/items.pyc
+*.pyc
