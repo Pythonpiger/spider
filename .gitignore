@@ -9,11 +9,20 @@ mm131/.idea/mm131.iml
 *.iml
 *.iml
 ldh/.idea/vcs.xml
+<<<<<<< HEAD
 ldh/.idea/codeStyleSettings.xml
+=======
+mm131/mm131/__init__.pyc
+mm131/mm131/__init__.pyc
+mm131/mm131/items.pyc
+*.pyc
+mm131/.idea/workspace.xml
+>>>>>>> ff34d17583e96a1c54ee4291633ca8f31d8e6715
 kehuan/.idea/encodings.xml
 kehuan/.idea/misc.xml
 kehuan/.idea/modules.xml
 kehuan/.idea/workspace.xml
+<<<<<<< HEAD
 ldh/.idea/encodings.xml
 ldh/.idea/ldh.iml
 ldh/.idea/ldh.iml
@@ -29,3 +38,24 @@ kehuan/kehuan/items.pyc
 *.iml
 ldh/.idea/misc.xml
 mm131/.idea/mm131.iml
+=======
+mm131/.idea/mm131.iml
+mm131/.idea/mm131.iml
+mm131/.idea/modules.xml
+mm131/.idea/workspace.xml
+*.xml
+mm131/.idea/mm131.iml
+mm131/.idea/mm131.iml
+mm131/.idea/modules.xml
+mm131/.idea/workspace.xml
+*.xml
+mm131/.idea/misc.xml
+mm131/.idea/misc.xml
+mm131/.idea/misc.xml
+mm131/.idea/misc.xml
+mm131/.idea/mm131.iml
+mm131/.idea/modules.xml
+mm131/.idea/workspace.xml
+mm131/.idea/workspace.xml
+mm131/.idea/workspace.xml
+>>>>>>> ff34d17583e96a1c54ee4291633ca8f31d8e6715
